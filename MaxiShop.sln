@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Web", "MaxiShop.Web\MaxiShop.Web.csproj", "{3665E6FB-930E-47A9-B1F8-6502870522D0}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3665E6FB-930E-47A9-B1F8-6502870522D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3665E6FB-930E-47A9-B1F8-6502870522D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3665E6FB-930E-47A9-B1F8-6502870522D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3665E6FB-930E-47A9-B1F8-6502870522D0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{3665E6FB-930E-47A9-B1F8-6502870522D0} = {CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5C8D92BE-55CB-48ED-9AB3-F8430D541805}
+	EndGlobalSection
+EndGlobal
