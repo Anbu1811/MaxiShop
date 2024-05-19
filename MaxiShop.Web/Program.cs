@@ -1,4 +1,5 @@
-using MaxiShop.Web.Data;
+
+using MaxiShop.Infrastructue.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 
@@ -15,7 +16,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 #endregion
 
-#region
+#region CORS Add
 
 builder.Services.AddCors(options =>
 {
