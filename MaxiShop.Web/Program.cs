@@ -15,7 +15,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 
 #endregion
 
-#region
+#region Add CORS Config
 
 builder.Services.AddCors(options =>
 {
