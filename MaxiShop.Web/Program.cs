@@ -1,4 +1,4 @@
-
+using MaxiShop.Infrastructue;
 using MaxiShop.Infrastructue.DbContexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -7,6 +7,11 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
+#region Add CategoryRepository services
+
+builder.Services.AddInfrastructureServices();
+
+#endregion
 
 #region DataBase Connectivity
 
