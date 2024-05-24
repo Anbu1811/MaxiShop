@@ -5,6 +5,9 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using MaxiShop.Application.Services.Interface;
 using MaxiShop.Application.DTO.Category;
+using MaxiShop.Application.Common;
+using System.Net;
+using MaxiShop.Application.ApplicatioConstants;
 
 namespace MaxiShop.Web.Controllers
 {
@@ -13,21 +16,38 @@ namespace MaxiShop.Web.Controllers
 	public class CategoryController : ControllerBase
 	{
 		private readonly ICategoryService _categoryService;
+		protected APIResponse _apiResponse;
 
 
 		public CategoryController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
+			_apiResponse = new APIResponse();
         }
 
 		[HttpPost]
-		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status400BadRequest)]
-		public async Task<ActionResult> Create([FromBody] CreateCategoryDTO category)
+		[ProducesResponseType(StatusCodes.Status201Created)]
+		
+		public async Task<ActionResult<APIResponse>> Create([FromBody] CreateCategoryDTO category)
 		{
-			var result =await _categoryService.CreateAsync(category);
+			try
+			{
+				var result = await _categoryService.CreateAsync(category);
 
-			return Ok(result);
+				_apiResponse.StatusCode = HttpStatusCode.Created;
+				_apiResponse.IsSuccess = true;
+				_apiResponse.Result = result;
+				_apiResponse.Message = CommonMessage.CreateOperationSuccess;
+			}
+			catch (Exception)
+			{
+
+				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.Message = CommonMessage.CreateOperationFailed;
+				_apiResponse.AddError(CommonMessage.SystemError);
+			}
+
+			return Ok(_apiResponse);
 
 		}
 
@@ -35,64 +55,131 @@ namespace MaxiShop.Web.Controllers
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		
-		public async Task<ActionResult<List<ShowCategoryDTO>>> GetAll()
+		public async Task<ActionResult<APIResponse>> GetAll()
 		{
-			var result = await _categoryService.GetAllAsync();
+			try
+			{
+				var result = await _categoryService.GetAllAsync();
+
+				_apiResponse.StatusCode = HttpStatusCode.OK;
+				_apiResponse.IsSuccess = true;
+				_apiResponse.Result = result;
+			}
+			catch (Exception)
+			{
+				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.AddError(CommonMessage.SystemError);
+			}
 			
-			return Ok(result);
+			return Ok(_apiResponse);
 
 		}
 
 		[HttpGet]
 		[Route("Details")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		public async Task<ActionResult> GetById(int id)
+		public async Task<ActionResult<APIResponse>> GetById(int id)
 		{
-			//var find = _dbContext.Categories.Find(id);
-			var find = await _categoryService.GetByIdAsync(id);
-
-			if(find == null)
+			try
 			{
-				return NotFound($"Category not found Id - {id}");
-			}
 
-			return Ok(find);
+				var find = await _categoryService.GetByIdAsync(id);
+
+				if (find == null)
+				{
+					_apiResponse.StatusCode = HttpStatusCode.NotFound;
+					_apiResponse.Message = CommonMessage.RecordNotFound;
+					return Ok(_apiResponse);
+				}
+
+				_apiResponse.StatusCode = HttpStatusCode.OK;
+				_apiResponse.IsSuccess = true;
+				_apiResponse.Result = find;
+				
+
+			}
+			catch (Exception)
+			{
+				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.AddError(CommonMessage.SystemError);
+			}
+			return Ok(_apiResponse);
 		}
 
 		[HttpPut]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
-		public async Task<ActionResult> Update([FromBody] UpdateCategoryDTO category)
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<APIResponse>> Update([FromBody] UpdateCategoryDTO category)
 		{
-			//var check = _dbContext.Categories.FirstOrDefault(x => x.Id == category.Id);
 
-			//if(check == null)
-			//{
-			//	return NotFound($"Category not found Id - {category.Id}");
-			//}
+			try
+			{
+				 var find = await _categoryService.GetByIdAsync(category.ID);
 
-			await _categoryService.UpdateAsync(category);
+				if (find == null)
+				{
+					_apiResponse.StatusCode = HttpStatusCode.NotFound;
+					_apiResponse.Message = CommonMessage.UpdateOperationFailed;
+
+					return Ok(_apiResponse);
+				}
+
+				await _categoryService.UpdateAsync(category);
+
+				_apiResponse.StatusCode = HttpStatusCode.OK;
+				_apiResponse.IsSuccess = true;
+				_apiResponse.Result = category;
+				_apiResponse.Message = CommonMessage.UpdateOperationSuccess;
+
+			}
+			catch (Exception)
+			{
+
+				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.Message = CommonMessage.UpdateOperationFailed;
+				_apiResponse.AddError(CommonMessage.UpdateOperationFailed);
+			}
 			
 
-			return NoContent();
-		}
-
-		[HttpDelete]
-		[ProducesResponseType(StatusCodes.Status404NotFound)]
-		[ProducesResponseType(StatusCodes.Status204NoContent)]
-
-		public async Task<ActionResult> Delete(int id)
-		{
-			var find = await _categoryService.GetByIdAsync(id);
-
-			if (find == null)
-			{
-				return NotFound($"Category not found Id - {id}");
+			return Ok(_apiResponse);
 			}
 
-			await _categoryService.DeleteAsync(id);
+		[HttpDelete]
+		[ProducesResponseType(StatusCodes.Status200OK)]
+		public async Task<ActionResult<APIResponse>> Delete(int id)
+		{
+			try
+			{
+				var find = await _categoryService.GetByIdAsync(id);
 
-			return NoContent();
+				
+
+				if (find == null)
+				{
+					
+					_apiResponse.StatusCode = HttpStatusCode.NotFound;
+					_apiResponse.Message = CommonMessage.DeleteOperationFailed;
+					
+					return Ok(_apiResponse);
+
+				}
+
+				await _categoryService.DeleteAsync(id);
+
+				_apiResponse.StatusCode = HttpStatusCode.OK;
+				_apiResponse.IsSuccess	=true;
+				_apiResponse.Result = find;
+				_apiResponse.Message = CommonMessage.DeleteOperationSuccess;
+
+			}
+			catch (Exception)
+			{
+
+				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.Message = CommonMessage.DeleteOperationFailed;
+				_apiResponse.AddError(CommonMessage.SystemError);
+			}
+
+			return Ok(_apiResponse);
 		}
     }
 }
