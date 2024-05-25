@@ -67,7 +67,7 @@ namespace MaxiShop.Web.Controllers
 			}
 			catch (Exception)
 			{
-				_apiResponse.StatusCode = HttpStatusCode.InternalServerError;
+				_apiResponse.StatusCode = HttpStatusCode.NotFound;
 				_apiResponse.AddError(CommonMessage.SystemError);
 			}
 			

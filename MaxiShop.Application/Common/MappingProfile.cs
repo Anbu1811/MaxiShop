@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using MaxiShop.Application.DTO.Brand;
 using MaxiShop.Application.DTO.Category;
 using MaxiShop.Domain.Contracts;
 using MaxiShop.Domain.Model;
@@ -18,6 +19,10 @@ namespace MaxiShop.Application.Common
             CreateMap<Category, UpdateCategoryDTO>().ReverseMap();
             CreateMap<Category, ShowCategoryDTO>().ReverseMap();
 
+
+            CreateMap<Brand, CreateBrandDTO>().ReverseMap();
+            CreateMap<Brand,  UpdateBrandDTO>().ReverseMap();
+            CreateMap<Brand,  ShowBrandDTO>().ReverseMap();
         }
     }
 }

@@ -16,6 +16,7 @@ namespace MaxiShop.Application
 		{
 			services.AddAutoMapper(typeof(MappingProfile));
 			services.AddScoped<ICategoryService, CategoryService>();
+			services.AddScoped<IBrandService, BrandServices>();
 
 
 			return services;
