@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using MaxiShop.Application.DTO.Brand;
 using MaxiShop.Application.DTO.Category;
+using MaxiShop.Application.DTO.Product;
 using MaxiShop.Domain.Contracts;
 using MaxiShop.Domain.Model;
 using System;
@@ -23,6 +24,14 @@ namespace MaxiShop.Application.Common
             CreateMap<Brand, CreateBrandDTO>().ReverseMap();
             CreateMap<Brand,  UpdateBrandDTO>().ReverseMap();
             CreateMap<Brand,  ShowBrandDTO>().ReverseMap();
-        }
+
+
+            CreateMap<Product, CreateProductDTO>().ReverseMap();
+            CreateMap<Product, UpdateProductDTO>().ReverseMap();
+            CreateMap<Product,  ShowProductDTO>()
+                .ForMember(x=>x.Category,opt => opt.MapFrom(source => source.Category.Name))
+				.ForMember(x => x.Brand, opt => opt.MapFrom(source => source.Brand.Name))
+				.ForMember(x => x.ExtablishYear, opt => opt.MapFrom(source => source.Brand.ExtablishYear));
+		}
     }
 }
