@@ -18,7 +18,7 @@ namespace MaxiShop.Infrastructue.Repositories
             
         }
 
-		public async Task<IEnumerable<Product>> GetAllProductAsync()
+		public async Task<List<Product>> GetAllProductAsync()
 		{
 			var result = await _dbContext.Products.Include(x=>x.Category).Include(x=>x.Brand).AsNoTracking().ToListAsync();
 

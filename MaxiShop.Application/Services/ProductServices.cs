@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using MaxiShop.Application.DTO.Product;
+using MaxiShop.Application.InputModel;
 using MaxiShop.Application.Services.Interface;
+using MaxiShop.Application.ViewModel;
 using MaxiShop.Domain.Contracts;
 using MaxiShop.Domain.Model;
 using System;
@@ -16,11 +18,13 @@ namespace MaxiShop.Application.Services
 	{
 		private readonly IMapper _mapper;
 		private readonly IProductRepository _productRepostory;
+		private readonly IPaginationService<ShowProductDTO,Product> _pagination;
 
-        public ProductServices(IProductRepository productRepostory, IMapper mapper)
+        public ProductServices(IProductRepository productRepostory, IMapper mapper, IPaginationService<ShowProductDTO, Product> pagination)
         {
 			_productRepostory = productRepostory;
 			_mapper = mapper;
+			_pagination = pagination;
         }
 
 
@@ -52,7 +56,10 @@ namespace MaxiShop.Application.Services
 
 		public async Task<IEnumerable<ShowProductDTO>> GetByFilterAsync(int? CategoryId, int? BrandId)
 		{
-			var query = await _productRepostory.GetAllProductAsync();
+			var data = await _productRepostory.GetAllProductAsync();
+
+			IEnumerable<Product> query = data;
+
 
 			if (CategoryId > 0)
 			{
@@ -76,6 +83,16 @@ namespace MaxiShop.Application.Services
 			var getId = await _productRepostory.GetByProductIdAsync(id);
 
 			var result = _mapper.Map<ShowProductDTO>(getId);
+
+			return result;
+		}
+
+		public async Task<PaginationVM<ShowProductDTO>> GetPagination(PaginationIM pagination)
+		{
+
+			var source = await _productRepostory.GetAllProductAsync();
+
+			var result = _pagination.GetPagination(source, pagination);
 
 			return result;
 		}

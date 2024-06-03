@@ -1,4 +1,6 @@
 ﻿using MaxiShop.Application.DTO.Product;
+using MaxiShop.Application.InputModel;
+using MaxiShop.Application.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +11,7 @@ namespace MaxiShop.Application.Services.Interface
 {
 	public interface IProductService
 	{
+		Task<PaginationVM<ShowProductDTO>> GetPagination(PaginationIM pagination); 
 		Task<ShowProductDTO> CreateAsync(CreateProductDTO productDTO);
 
 		Task UpdateAsync(UpdateProductDTO productDTO);
