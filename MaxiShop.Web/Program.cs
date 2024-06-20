@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Writers;
 using MaxiShop.Infrastructue.Common;
+using MaxiShop.Web.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -66,6 +67,9 @@ static async void UpdateDataBaseAsync(IHost host)
 
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionMiddleware>();
+
 UpdateDataBaseAsync(app);
 
 // Configure the HTTP request pipeline.

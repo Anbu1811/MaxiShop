@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MaxiShop.Application.DTO.Product;
+using MaxiShop.Application.Exceptions;
 using MaxiShop.Application.InputModel;
 using MaxiShop.Application.Services.Interface;
 using MaxiShop.Application.ViewModel;
@@ -30,6 +31,15 @@ namespace MaxiShop.Application.Services
 
         public async Task<ShowProductDTO> CreateAsync(CreateProductDTO productDTO)
 		{
+			var validator = new CreateProductDTOValidator();
+
+			var validateResult = await validator.ValidateAsync(productDTO);
+
+			if (validateResult.Errors.Any())
+			{
+				throw new BadRequestException("Invalid Product Input", validateResult);
+			}
+
 			var create =  _mapper.Map<Product>(productDTO);
 
 			var result = await _productRepostory.CreateAsync(create);

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using FluentValidation;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,10 +10,20 @@ namespace MaxiShop.Application.DTO.Brand
 {
 	public class CreateBrandDTO
 	{
-		[Required]
+		
 		public string Name { get; set; }
 
-		[Required]
+		
 		public int ExtablishYear { get; set; }
+	}
+
+	public class CreateBrandDTOValidation : AbstractValidator<CreateBrandDTO>
+	{
+		public CreateBrandDTOValidation() 
+		{
+			RuleFor(x=>x.Name).NotEmpty().NotNull().WithMessage("Name Field is Mandotory");
+			RuleFor(x=>x.ExtablishYear).NotEmpty().NotNull().GreaterThanOrEqualTo(1950).WithMessage("Brand year between 1950 to current year");
+		}
+
 	}
 }

@@ -18,7 +18,5 @@ namespace MaxiShop.Domain.Contracts
 
 		Task<IEnumerable<T>> GetAllAsync();
 
-
-
 	}
 }
