@@ -6,6 +6,8 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Writers;
 using MaxiShop.Infrastructue.Common;
 using MaxiShop.Web.Middlewares;
+using Microsoft.AspNetCore.Identity;
+using MaxiShop.Application.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,6 +20,13 @@ builder.Services.AddApplicationServices();
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(connection));
+
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options =>
+{
+	options.SignIn.RequireConfirmedEmail = false;
+	options.User.RequireUniqueEmail = true;
+
+}).AddEntityFrameworkStores<ApplicationDbContext>();
 
 #endregion
 
@@ -71,6 +80,10 @@ var app = builder.Build();
 app.UseMiddleware<ExceptionMiddleware>();
 
 UpdateDataBaseAsync(app);
+
+var serviceProvider = app.Services;
+
+await SeedData.SeedRoles(serviceProvider);
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

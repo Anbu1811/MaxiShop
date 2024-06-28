@@ -15,6 +15,12 @@ namespace MaxiShop.Application.ApplicatioConstants
 	public class CommonMessage
 	{
 
+		public const string RegistrationSuccess = "Registration Successfully";
+		public const string RegistrationFailed = "Registration Failed";
+
+		public const string LoginSuccess = "Login Successfully ";
+		public const string LoginFailed = "Login Failed ";
+
 		public const string CreateOperationSuccess = "Record Created Successfully";
 		public const string DeleteOperationSuccess = "Record Delete Successfully";
 		public const string UpdateOperationSuccess = "Record Update Successfully";
