@@ -4,6 +4,7 @@ using MaxiShop.Application.DTO.Product;
 using MaxiShop.Application.Exceptions;
 using MaxiShop.Application.InputModel;
 using MaxiShop.Application.Services.Interface;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
@@ -61,7 +62,7 @@ namespace MaxiShop.Web.Controllers
 
 		}
 
-
+		[Authorize]
 		[HttpGet]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<ActionResult<APIResponse>> GetAll()
@@ -196,6 +197,8 @@ namespace MaxiShop.Web.Controllers
 
 		}
 
+
+		[Authorize(Roles = "ADMIN")]
 		[HttpPost]
 		[Route("Pagination")]
 		[ProducesResponseType(StatusCodes.Status200OK)]

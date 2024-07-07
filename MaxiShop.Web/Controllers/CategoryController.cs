@@ -8,9 +8,11 @@ using MaxiShop.Application.DTO.Category;
 using MaxiShop.Application.Common;
 using System.Net;
 using MaxiShop.Application.ApplicatioConstants;
+using Microsoft.AspNetCore.Authorization;
 
 namespace MaxiShop.Web.Controllers
 {
+	[Authorize]
 	[Route("api/[controller]")]
 	[ApiController]
 	public class CategoryController : ControllerBase

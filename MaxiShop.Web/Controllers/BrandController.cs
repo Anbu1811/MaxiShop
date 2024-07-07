@@ -65,6 +65,7 @@ namespace MaxiShop.Web.Controllers
 
 
 		[HttpGet]
+		[ResponseCache(CacheProfileName = "Default")]
 		[ProducesResponseType(StatusCodes.Status200OK)]
 		public async Task<ActionResult<APIResponse>> GetAll()
 		{
