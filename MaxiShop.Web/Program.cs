@@ -13,6 +13,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Runtime.Intrinsics;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +48,19 @@ builder.Services.AddCors(options =>
 
 builder.Services.AddResponseCaching();
 
+builder.Services.AddApiVersioning(options =>
+{
+	options.AssumeDefaultVersionWhenUnspecified = true;
+	options.DefaultApiVersion = new ApiVersion(1, 0);
+	options.ReportApiVersions = true;
+});
+
+builder.Services.AddVersionedApiExplorer(options =>
+{
+	options.GroupNameFormat = "'v'VVV";
+	options.SubstituteApiVersionInUrl = true;
+});
+
 builder.Services.AddControllers(options =>
 {
 	options.CacheProfiles.Add("Default", new CacheProfile
@@ -53,6 +68,17 @@ builder.Services.AddControllers(options =>
 		Duration = 60
 	});
 });
+
+builder.Host.UseSerilog((context, config) =>
+{
+	config.WriteTo.File("Logs/Log.txt", rollingInterval:RollingInterval.Day);
+
+	if(context.HostingEnvironment.IsProduction() == false)
+	{
+		config.WriteTo.Console();
+	}
+});
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 
@@ -77,7 +103,22 @@ builder.Services.AddAuthentication(options =>
 
 builder.Services.AddSwaggerGen(options =>
 {
-      options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+	options.SwaggerDoc("v1", new OpenApiInfo
+	{
+		Title = "MaxiShop API Version 1",
+		Description = "Develope by Anbu",
+		Version = "v1.0"
+	});
+
+	options.SwaggerDoc("v2", new OpenApiInfo
+	{
+		Title = "MaxiShop API Version 2",
+		Description = "Develope by Anbu",
+		Version = "v2.0"
+	});
+
+
+	options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
       {
 		  Name = "Authorization",
 		  In = ParameterLocation.Header,
@@ -151,8 +192,20 @@ await SeedData.SeedRoles(serviceProvider);
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
-	app.UseSwaggerUI();
+	app.UseSwaggerUI(options =>
+	{
+		options.SwaggerEndpoint("/swagger/v1/swagger.json","MaxiShop_V1");
+		options.SwaggerEndpoint("/swagger/v2/swagger.json", "MaxiShop_V2");
+	});
 }
+
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+	options.SwaggerEndpoint("/swagger/v1/swagger.json", "MaxiShop_V1");
+	options.SwaggerEndpoint("/swagger/v2/swagger.json", "MaxiShop_V2");
+	options.RoutePrefix = string.Empty;
+});
 
 app.UseCors("CustomPolicy");
 
