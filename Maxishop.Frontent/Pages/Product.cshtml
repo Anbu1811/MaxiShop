@@ -1,0 +1,29 @@
+﻿@page
+@model Maxishop.Frontent.Pages.ProductModel
+@{
+}
+
+
+<h2>
+    Product List
+</h2>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <td>Id</td>
+            <td>Name</td>
+            <td>Extiblish Year</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Name</td>
+                <td>@item.ExtablishYear</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -10,6 +10,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddInfrastructureServices();
 builder.Services.AddApplicationServices();
 
+
+
 #region DataBase Connectivity
 
 var connection = builder.Configuration.GetConnectionString("DefaultConnection");

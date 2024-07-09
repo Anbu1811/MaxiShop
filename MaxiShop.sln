@@ -7,11 +7,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{CBF4D3DA-82C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxiShop.Web", "MaxiShop.Web\MaxiShop.Web.csproj", "{3665E6FB-930E-47A9-B1F8-6502870522D0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Application", "MaxiShop.Application\MaxiShop.Application.csproj", "{5527869E-261E-4190-A917-1AE8BC24A8B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxiShop.Application", "MaxiShop.Application\MaxiShop.Application.csproj", "{5527869E-261E-4190-A917-1AE8BC24A8B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Domain", "MaxiShop.Domain\MaxiShop.Domain.csproj", "{FB05334F-B116-4DBA-9BB7-6D49C0CD3DE0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxiShop.Domain", "MaxiShop.Domain\MaxiShop.Domain.csproj", "{FB05334F-B116-4DBA-9BB7-6D49C0CD3DE0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MaxiShop.Infrastructue", "MaxiShop.Infrastructue\MaxiShop.Infrastructue.csproj", "{305EB3D5-BB63-4F8E-A19D-8C355518678C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MaxiShop.Infrastructue", "MaxiShop.Infrastructue\MaxiShop.Infrastructue.csproj", "{305EB3D5-BB63-4F8E-A19D-8C355518678C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maxishop.Frontent", "Maxishop.Frontent\Maxishop.Frontent.csproj", "{2235E939-8DCF-492F-B2D4-B427D9077517}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{305EB3D5-BB63-4F8E-A19D-8C355518678C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{305EB3D5-BB63-4F8E-A19D-8C355518678C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{305EB3D5-BB63-4F8E-A19D-8C355518678C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2235E939-8DCF-492F-B2D4-B427D9077517}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2235E939-8DCF-492F-B2D4-B427D9077517}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2235E939-8DCF-492F-B2D4-B427D9077517}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2235E939-8DCF-492F-B2D4-B427D9077517}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +50,7 @@ Global
 		{5527869E-261E-4190-A917-1AE8BC24A8B3} = {CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}
 		{FB05334F-B116-4DBA-9BB7-6D49C0CD3DE0} = {CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}
 		{305EB3D5-BB63-4F8E-A19D-8C355518678C} = {CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}
+		{2235E939-8DCF-492F-B2D4-B427D9077517} = {CBF4D3DA-82CA-448A-ABCF-93A18CFDABBD}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5C8D92BE-55CB-48ED-9AB3-F8430D541805}
